@@ -1,28 +1,28 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ems
+  name: k8s
   labels:
-    app: ems
+    app: k8s
 spec:
   ports:
     - port: 8080
   selector:
-    app: ems
-    tier: ems
+    app: k8s
+    tier: k8s
   type: NodePort
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: ems
+  name: k8s
   labels:
-    app: ems
+    app: k8s
 spec:
   selector:
     matchLabels:
-      app: ems
-      tier: ems
+      app: k8s
+      tier: k8s
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -32,12 +32,12 @@ spec:
   template:
     metadata:
       labels:
-        app: ems
-        tier: ems
+        app: k8s
+        tier: k8s
     spec:
       containers:
       - image: parma/k8s:$BUILD_NUMBER
-        name: ems
+        name: k8s
         resources:
           limits:
             cpu: "500m"
