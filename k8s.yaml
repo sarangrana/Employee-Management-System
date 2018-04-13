@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ems
+  labels:
+    app: ems
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: ems
+    tier: ems
+  type: NodePort
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: ems
+  labels:
+    app: ems
+spec:
+  selector:
+    matchLabels:
+      app: ems
+      tier: ems
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2        # how many pods we can add at a time
+      maxUnavailable: 0  # maxUnavailable define how many pods can be unavailable
+                         # during the rolling update
+  template:
+    metadata:
+      labels:
+        app: ems
+        tier: ems
+    spec:
+      containers:
+      - image: parma/k8s:$BUILD_NUMBER
+        name: ems
+        resources:
+          limits:
+            cpu: "2m"
+          requests:
+            cpu: "2m"
+        ports:
+        - containerPort: 8080
+          name: ems
