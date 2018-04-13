@@ -24,7 +24,7 @@ spec:
       app: k8s
       tier: k8s
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
