@@ -40,9 +40,9 @@ spec:
         name: ems
         resources:
           limits:
-            cpu: "2m"
+            cpu: "500m"
           requests:
-            cpu: "2m"
+            cpu: "500m"
         ports:
         - containerPort: 8080
           name: ems
